@@ -26,6 +26,10 @@
         if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
         }
+        const brandTheme = localStorage.getItem('brandTheme');
+        if (brandTheme === 'nexkool') {
+          document.documentElement.classList.add('nexkool');
+        }
       })();
     </script>
     <div id="root"></div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { 
   LayoutDashboard, 
@@ -8,6 +8,7 @@ import {
   LogOut, 
   Menu,
   Library,
+  BookOpen,
   Building2,
   ShoppingCart
 } from "lucide-react";
@@ -26,6 +27,17 @@ interface SidebarProps {
 export function Sidebar({ collapsed, user }: SidebarProps) {
   const [location] = useLocation();
   const { logout } = useAuth();
+  const [isNexKool, setIsNexKool] = useState(() => 
+    typeof document !== 'undefined' && document.documentElement.classList.contains('nexkool')
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsNexKool(document.documentElement.classList.contains('nexkool'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
   
   const isSuperAdmin = user?.role === "super_admin";
   
@@ -42,12 +54,26 @@ export function Sidebar({ collapsed, user }: SidebarProps) {
     <div className="flex flex-col h-full bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
       <div className="p-6">
         <div className="flex items-center gap-3">
-          <div className="bg-primary-foreground/10 p-2 rounded-lg">
-            <Library className="h-6 w-6 text-sidebar-primary" />
+          <div className={cn(
+            "p-2 rounded-xl",
+            isNexKool ? "bg-sidebar-primary" : "bg-primary-foreground/10"
+          )}>
+            {isNexKool ? (
+              <BookOpen className="h-6 w-6 text-white" />
+            ) : (
+              <Library className="h-6 w-6 text-sidebar-primary" />
+            )}
           </div>
-          <h1 className="font-serif text-xl font-bold tracking-tight text-sidebar-foreground">
-            Athenaeum
-          </h1>
+          {isNexKool ? (
+            <div>
+              <span className="text-xl font-bold tracking-tight text-sidebar-foreground">NexKool</span>
+              <span className="text-sm text-sidebar-primary font-semibold ml-1">Library</span>
+            </div>
+          ) : (
+            <h1 className="font-serif text-xl font-bold tracking-tight text-sidebar-foreground">
+              Athenaeum
+            </h1>
+          )}
         </div>
       </div>
 

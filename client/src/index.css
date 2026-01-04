@@ -9,45 +9,39 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Modern Academic Theme */
-  /* Primary: Deep Navy Blue */
-  --color-primary: hsl(222 47% 15%); 
-  --color-primary-foreground: hsl(210 40% 98%);
-
-  /* Secondary: Warm Bronze/Gold */
-  --color-secondary: hsl(35 30% 90%);
-  --color-secondary-foreground: hsl(35 70% 25%);
-
-  /* Accent: Vibrant Gold for highlights */
-  --color-accent: hsl(35 70% 50%);
-  --color-accent-foreground: hsl(222 47% 11%);
-
-  /* Backgrounds: Paper/Parchment feel */
-  --color-background: hsl(30 10% 98%);
-  --color-foreground: hsl(222 47% 11%);
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Libre Baskerville", serif;
   
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(222 47% 11%);
-  
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(222 47% 11%);
-
-  --color-muted: hsl(220 14% 94%);
-  --color-muted-foreground: hsl(220 8% 46%);
+  --radius: 0.5rem;
 
   --color-destructive: hsl(0 84% 60%);
   --color-destructive-foreground: hsl(210 40% 98%);
+}
 
+:root {
+  /* Athenaeum Theme (Default) - Classic Academic */
+  --color-primary: hsl(222 47% 15%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(35 30% 90%);
+  --color-secondary-foreground: hsl(35 70% 25%);
+  --color-accent: hsl(35 70% 50%);
+  --color-accent-foreground: hsl(222 47% 11%);
+  --color-background: hsl(30 10% 98%);
+  --color-foreground: hsl(222 47% 11%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222 47% 11%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222 47% 11%);
+  --color-muted: hsl(220 14% 94%);
+  --color-muted-foreground: hsl(220 8% 46%);
   --color-border: hsl(220 13% 91%);
   --color-input: hsl(220 13% 91%);
   --color-ring: hsl(222 47% 15%);
-
   --color-chart-1: hsl(222 47% 15%);
   --color-chart-2: hsl(35 70% 50%);
   --color-chart-3: hsl(220 14% 94%);
   --color-chart-4: hsl(43 74% 66%);
   --color-chart-5: hsl(27 87% 67%);
-
   --color-sidebar: hsl(222 47% 15%);
   --color-sidebar-foreground: hsl(210 40% 98%);
   --color-sidebar-primary: hsl(35 70% 50%);
@@ -56,11 +50,44 @@
   --color-sidebar-accent-foreground: hsl(210 40% 98%);
   --color-sidebar-border: hsl(222 47% 20%);
   --color-sidebar-ring: hsl(35 70% 50%);
-
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Libre Baskerville", serif;
   
-  --radius: 0.5rem;
+  --brand-name: "Athenaeum";
+}
+
+:root.nexkool {
+  /* NexKool Theme - Modern School Management */
+  --color-primary: hsl(187 85% 35%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(210 20% 96%);
+  --color-secondary-foreground: hsl(210 20% 25%);
+  --color-accent: hsl(25 95% 53%);
+  --color-accent-foreground: hsl(0 0% 100%);
+  --color-background: hsl(210 20% 98%);
+  --color-foreground: hsl(210 20% 20%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(210 20% 20%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(210 20% 20%);
+  --color-muted: hsl(210 15% 94%);
+  --color-muted-foreground: hsl(210 10% 45%);
+  --color-border: hsl(210 15% 88%);
+  --color-input: hsl(210 15% 88%);
+  --color-ring: hsl(187 85% 35%);
+  --color-chart-1: hsl(187 85% 35%);
+  --color-chart-2: hsl(25 95% 53%);
+  --color-chart-3: hsl(160 60% 45%);
+  --color-chart-4: hsl(210 70% 50%);
+  --color-chart-5: hsl(280 60% 50%);
+  --color-sidebar: hsl(187 85% 28%);
+  --color-sidebar-foreground: hsl(0 0% 100%);
+  --color-sidebar-primary: hsl(25 95% 53%);
+  --color-sidebar-primary-foreground: hsl(0 0% 100%);
+  --color-sidebar-accent: hsl(187 85% 35%);
+  --color-sidebar-accent-foreground: hsl(0 0% 100%);
+  --color-sidebar-border: hsl(187 70% 22%);
+  --color-sidebar-ring: hsl(25 95% 53%);
+  
+  --brand-name: "NexKool";
 }
 
 @layer base {
@@ -68,9 +95,15 @@
     @apply border-border;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    font-family: var(--font-serif);
+  }
+  
+  .nexkool h1, .nexkool h2, .nexkool h3, .nexkool h4, .nexkool h5, .nexkool h6 {
+    font-family: var(--font-sans);
   }
 }

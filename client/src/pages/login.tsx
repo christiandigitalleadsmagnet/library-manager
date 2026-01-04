@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Library, ArrowRight, Shield } from "lucide-react";
+import { Library, BookOpen, ArrowRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -24,6 +24,17 @@ export default function Login() {
   const { login } = useAuth();
   const [schools, setSchools] = useState<School[]>([]);
   const [loadingSchools, setLoadingSchools] = useState(true);
+  const [isNexKool, setIsNexKool] = useState(() => 
+    typeof document !== 'undefined' && document.documentElement.classList.contains('nexkool')
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsNexKool(document.documentElement.classList.contains('nexkool'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     async function fetchSchools() {
@@ -76,15 +87,31 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-primary mb-6">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <Library className="h-8 w-8" />
-              </div>
-              <span className="font-serif text-2xl font-bold">Athenaeum</span>
+            <div className="flex items-center gap-3 mb-6">
+              {isNexKool ? (
+                <>
+                  <div className="bg-primary p-2.5 rounded-xl shadow-lg">
+                    <BookOpen className="h-7 w-7 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-2xl font-bold text-foreground tracking-tight">NexKool</span>
+                    <span className="text-lg text-primary font-semibold ml-1">Library</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bg-primary/10 p-2 rounded-lg">
+                    <Library className="h-8 w-8 text-primary" />
+                  </div>
+                  <span className="font-serif text-2xl font-bold">Athenaeum</span>
+                </>
+              )}
             </div>
-            <h1 className="font-serif text-4xl font-bold tracking-tight">Welcome back</h1>
+            <h1 className={isNexKool ? "text-3xl font-bold tracking-tight text-foreground" : "font-serif text-4xl font-bold tracking-tight"}>
+              {isNexKool ? "Sign in to your account" : "Welcome back"}
+            </h1>
             <p className="text-muted-foreground">
-              Sign in to access your school's library management system.
+              {isNexKool ? "Access your school's library management system" : "Sign in to access your school's library management system."}
             </p>
           </div>
 

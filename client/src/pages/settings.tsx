@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { User, Lock, Moon, Sun, Bell, BellOff } from "lucide-react";
+import { User, Lock, Moon, Sun, Bell, BellOff, Palette } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,9 @@ export default function SettingsPage() {
   const { user, refreshUser } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return document.documentElement.classList.contains("dark");
+  });
+  const [isNexKoolTheme, setIsNexKoolTheme] = useState(() => {
+    return document.documentElement.classList.contains("nexkool");
   });
   const [notifications, setNotifications] = useState(true);
 
@@ -93,6 +96,22 @@ export default function SettingsPage() {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
+  };
+
+  const toggleBrandTheme = () => {
+    const newMode = !isNexKoolTheme;
+    setIsNexKoolTheme(newMode);
+    if (newMode) {
+      document.documentElement.classList.add("nexkool");
+      localStorage.setItem("brandTheme", "nexkool");
+    } else {
+      document.documentElement.classList.remove("nexkool");
+      localStorage.setItem("brandTheme", "athenaeum");
+    }
+    toast({ 
+      title: newMode ? "NexKool Theme" : "Athenaeum Theme",
+      description: newMode ? "Switched to modern NexKool styling" : "Switched to classic Athenaeum styling"
+    });
   };
 
   const toggleNotifications = () => {
@@ -234,6 +253,23 @@ export default function SettingsPage() {
                 data-testid="switch-dark-mode"
                 checked={isDarkMode} 
                 onCheckedChange={toggleTheme} 
+              />
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Palette className="h-5 w-5" />
+                <div>
+                  <p className="font-medium">NexKool Theme</p>
+                  <p className="text-sm text-muted-foreground">
+                    {isNexKoolTheme ? "Modern teal & orange styling" : "Classic navy & gold styling"}
+                  </p>
+                </div>
+              </div>
+              <Switch 
+                data-testid="switch-brand-theme"
+                checked={isNexKoolTheme} 
+                onCheckedChange={toggleBrandTheme} 
               />
             </div>
             <Separator />
